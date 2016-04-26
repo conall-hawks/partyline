@@ -1,0 +1,59 @@
+#usernav-icon + label {
+	background-image: url("/image/user.png");
+}
+
+.chat .messages h2{
+	padding: 0 36px 0 4px;
+	text-align: right;
+}
+
+.chat .messages h2 span:first-of-type {
+	float: left;
+}
+
+.content article p {
+	background: rgba(255, 255, 255, .0625);
+	border-bottom: 1px solid rgba(255, 255, 255, .0625);
+	border-radius: 2px;
+	height: calc(100vh - 78px);
+	margin: 8px 8px 0;
+	padding: 0 4px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.message {
+	background: rgba(255, 255, 255, .0625);
+	border-radius: 2px;
+	box-shadow: 0 0 2px black;
+	clear: both;
+	display: table;
+	line-height: 16px;
+	margin: 0 0 4px 0;
+	padding: 0 2px 0 0;
+}
+
+.meta {
+	float: left;
+	line-height: 13px;
+	margin-right: 4px;
+	table-layout: fixed;
+	vertical-align: middle;
+}
+
+.meta .user-icon {
+	background: rgba(0, 0, 0, .0625);
+	border-radius: 2px;
+	height: 31px;
+	margin-right: 2px;
+	width: 31px;
+}
+
+.meta .timestamp {
+	font-family: consolas;
+	font-size: 80%;
+	line-height: 100%;
+}
+.meta .system, .meta .admin, .meta.username, .meta .guest {
+	text-align: right;
+}

@@ -1,0 +1,30 @@
+<template name="messages">
+	<section class="messages content">
+		<input id="compose-icon" class="right-icon" type="checkbox" /><label for="compose-icon"><i class="fa fa-plus"></i></label>
+		<article class="messages">
+			{{#if messages}}
+				<h2>{{getUserName private}}</h2>
+				<p>
+					{{#each message}}
+						<div class="message"><table class="meta"><tr><td rowspan="2"><img class="user-icon" src="{{getUserIcon sender}}" /></td><td class="username">{{getUserName sender}}: </td></tr><tr><td class="timestamp">[{{clock timestamp}}]</td></tr></table>{{content}}</div>
+					{{/each}}
+				</p>
+				<input class="reply-private-message-input" type="text" placeholder="Message" /><input class="reply-private-message-submit" type="button" value="Send" />
+			{{else}}
+				<h2>No messages.</h2>
+			{{/if}}
+		</article>
+		<aside class="compose">
+			<h2>Messages: </h2>
+			<ul class="conversations">
+				{{#each conversation}}
+					<li class="{{selected this}}">{{getUserName this}}</li>
+				{{/each}}
+			</ul>
+			<h2>Compose</h2>
+			<input class="compose-private-message-input" type="text" placeholder="Recipient" />
+			<textarea class="compose-private-message-textarea" placeholder="Message"></textarea>
+			<input class="compose-private-message-submit" type="button" value="Send" />
+		</aside>
+	</section>
+</template>

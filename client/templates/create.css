@@ -1,0 +1,3 @@
+.new-roomname-input, .new-roomname-submit{
+	margin-top: calc(50vh - 39px) !important;
+}

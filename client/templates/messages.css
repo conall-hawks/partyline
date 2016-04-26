@@ -1,0 +1,23 @@
+label[for="compose-icon"] .fa-plus {
+	font-size: 35px;
+	color: rgba(255, 255, 255, 0.5);
+	text-align: center;
+	width: 100%;
+}
+
+.inbox {
+	height: 100vh;
+}
+
+.conversations {
+	height: calc(100vh - 239px);
+}
+
+.selected{
+	background: rgba(255, 255, 255, .125) !important;
+	color: white !important;
+}
+
+.conversation {
+	width: calc(100% - 16px);
+}

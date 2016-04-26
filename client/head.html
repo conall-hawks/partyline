@@ -1,0 +1,67 @@
+<head>
+	<!-- What you doing lookin' at my code? \(`0´)/ -->
+	<meta charset="utf-8" />
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="application-name" content="Partyline">
+	<meta name="author" content="Partyline" />
+	<meta name="copyright" content="Partyline" />
+	<meta name="description" content="Partyline!" />
+	<meta name="keywords" content="" />
+	<meta name="msapplication-TileImage" content="/images/favicon.png" />
+	<meta name="msapplication-TileColor" content="#FFFFFF" />
+	<meta name="referrer" content="no-referrer" />
+	<meta name="robots" content="follow, index, noarchive" />
+	<meta name="viewport" content="initial-scale=1.0, height=device-height, width=device-width" />
+	<base href="localhost" />
+	<title>Partyline</title>
+	
+	<!-- Universal stylesheets and style related stuff. -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="/images/favicon.png" rel="icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 192x192" />
+	<link href="/images/favicon.png" rel="apple-touch-icon" />
+	<link href="/misc/manifest.json" rel="manifest" />
+	
+	<!-- DNS prefetching. -->
+	<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+	<link rel="dns-prefetch" href="https://ajax.cdnjs.com" />
+	<link rel="dns-prefetch" href="https://anonym.to" />
+	<link rel="dns-prefetch" href="https://js.anonym.to" />
+	<link rel="dns-prefetch" href="https://s.ytimg.com" />
+	
+	<!-- Remotely hosted libraries. -->
+	<script async src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.13/es5-shim.min.js"></script>
+	<script async src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.33.3/es6-shim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.15/jquery.touchSwipe.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+	<script src="https://www.google.com/jsapi"></script>
+	<!--[if (gte IE 6)&(lte IE 8)]><script async src="https://cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.2/selectivizr-min.js"></script><![endif]-->
+	<!--[if IE 8]><script async src="https://cdnjs.cloudflare.com/ajax/libs/ie8/0.2.9/ie8.js"></script><![endif]-->
+	<!--[if lt IE 9]><script async src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script><![endif]-->
+	<!--[if lte IE 8]><script async src="https://tinyurl.com/pnusrvd" title="ExplorerCanvas"></script><![endif]-->
+	<script async src="https://cdnjs.cloudflare.com/ajax/libs/html5media/1.1.8/html5media.min.js"></script>
+	<script async src="https://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
+	<script async src="https://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.swf"></script>
+	
+	<!-- Fallbacks for remotely hosted libraries. -->
+	<script>window.jQuery || document.write('<script src="/misc/jquery.js"><\/script>')</script>
+	<script>window.$.throttle || document.write('<script src="/misc/throttle-debounce.js"><\/script>')</script>
+	<script>window.Modernizr || document.write('<script src="/misc/modernizr.js"><\/script>')</script>
+	<script>window.StyleFix || document.write('<script src="/misc/prefixfree.js"><\/script>')</script>
+	<script>window.google || document.write('<script src="/misc/google-api.js"><\/script>')</script>
+</head>
+
+<body>
+	<input id="menu-icon" type="checkbox" /><label for="menu-icon"></label>
+	<section class="main">
+		<input id="chat" name="header" type="radio" checked /><label for="chat"><i class="fa fa-comment"></i>Chat<span class="chat-unread">{{chatUnread}}</span></label>{{> chat}}
+		<input id="browse" name="header" type="radio" /><label for="browse"><i class="fa fa-group"></i>Browse Rooms</label>{{> browse}}
+		<input id="create" name="header" type="radio" /><label for="create"><i class="fa fa-plus"></i>Create Room</label>{{> create}}
+		<input id="messages" name="header" type="radio" /><label for="messages"><i class="fa fa-envelope"></i>Messages<span class="private-unread">{{privateUnread}}</span></label>{{> messages}}
+		<input id="profile" name="header" type="radio" /><label for="profile"><i class="fa fa-user"></i>Profile</label>{{> profile}}
+	</section>
+</body>
