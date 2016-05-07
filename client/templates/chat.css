@@ -30,13 +30,13 @@
 	display: table;
 	line-height: 16px;
 	margin: 0 0 4px 0;
-	padding: 0 2px 0 0;
+	padding: 0 2px;
 }
 
 .meta {
 	float: left;
 	line-height: 13px;
-	margin-right: 4px;
+	margin: 0 4px 0 -2px;
 	table-layout: fixed;
 	vertical-align: middle;
 }
@@ -56,4 +56,14 @@
 }
 .meta .system, .meta .admin, .meta.username, .meta .guest {
 	text-align: right;
+}
+
+.message iframe {
+	border: none;
+	border-radius: 4px; /* 2px doesn't show up? */
+	float: left;
+	height: 135px;		/* 16:9 */
+	max-width: 100%;
+	padding: 2px 0;
+	width: 240px;		/* 16:9 */
 }

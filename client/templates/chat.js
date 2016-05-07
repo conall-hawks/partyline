@@ -4,11 +4,11 @@ Template.chat.onCreated(function(){
 
 Template.chat.helpers({
 	room: function(){
-		return Accounts.users.findOne({_id: Meteor.userId()}).room;
+		return Session.get('room');
 	},
 	topic: function(){
 		return "Llamas!";
-		//return Room.topic;
+		//return Room.find({name: Session.get('room')}).topic;
 	},
 	messages: function(){
 		return Chat.find({room: Session.get('room')});
@@ -31,7 +31,17 @@ Template.chat.helpers({
 Template.chat.events({
 	'keypress .message-input': function(event){
 		if(event.keyCode == 13){
-			Meteor.call('chatMessage', Session.get('room'), event.target.value);
+			if(event.target.value.indexOf('/join') === 0){
+				Session.set('room', event.target.value.replace('/join ', ''));
+			}else if(event.target.value.indexOf('/topic') === 0){
+				Meteor.call('newTopic', Session.get('room'), event.target.value.replace('/topic '));
+			}else if(event.target.value.indexOf('/color') === 0){
+				console.log('color change request');
+			}else if(event.target.value.indexOf('/whisper') === 0){
+				privateMessage(event.target.value.replace('/whisper ', ''));
+			}else{
+				Meteor.call('chatMessage', Session.get('room'), event.target.value);
+			}
 			event.target.value = null;
 		}
 	},

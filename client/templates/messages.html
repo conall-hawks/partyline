@@ -6,7 +6,7 @@
 				<h2>{{getUserName private}}</h2>
 				<p>
 					{{#each message}}
-						<div class="message"><table class="meta"><tr><td rowspan="2"><img class="user-icon" src="{{getUserIcon sender}}" /></td><td class="username">{{getUserName sender}}: </td></tr><tr><td class="timestamp">[{{clock timestamp}}]</td></tr></table>{{content}}</div>
+						<div class="message"><table class="meta"><tr><td rowspan="2"><img class="user-icon" src="{{getUserIcon sender}}" /></td><td class="username">{{getUserName sender}}: </td></tr><tr><td class="timestamp">[{{clock timestamp}}]</td></tr></table>{{{parse content}}}</div>
 					{{/each}}
 				</p>
 				<input class="reply-private-message-input" type="text" placeholder="Message" /><input class="reply-private-message-submit" type="button" value="Send" />

@@ -15,6 +15,11 @@
 	<base href="localhost" />
 	<title>Partyline</title>
 	
+	<!-- DNS prefetching. -->
+	<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+	<link rel="dns-prefetch" href="https://ajax.cdnjs.com" />
+	<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+	
 	<!-- Universal stylesheets and style related stuff. -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" rel="stylesheet" />
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" />
@@ -23,36 +28,18 @@
 	<link href="/images/favicon.png" rel="apple-touch-icon" />
 	<link href="/misc/manifest.json" rel="manifest" />
 	
-	<!-- DNS prefetching. -->
-	<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
-	<link rel="dns-prefetch" href="https://ajax.cdnjs.com" />
-	<link rel="dns-prefetch" href="https://anonym.to" />
-	<link rel="dns-prefetch" href="https://js.anonym.to" />
-	<link rel="dns-prefetch" href="https://s.ytimg.com" />
-	
 	<!-- Remotely hosted libraries. -->
-	<script async src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.13/es5-shim.min.js"></script>
 	<script async src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.33.3/es6-shim.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.15/jquery.touchSwipe.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
-	<script src="https://www.google.com/jsapi"></script>
 	<!--[if (gte IE 6)&(lte IE 8)]><script async src="https://cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.2/selectivizr-min.js"></script><![endif]-->
 	<!--[if IE 8]><script async src="https://cdnjs.cloudflare.com/ajax/libs/ie8/0.2.9/ie8.js"></script><![endif]-->
 	<!--[if lt IE 9]><script async src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script><![endif]-->
-	<!--[if lte IE 8]><script async src="https://tinyurl.com/pnusrvd" title="ExplorerCanvas"></script><![endif]-->
-	<script async src="https://cdnjs.cloudflare.com/ajax/libs/html5media/1.1.8/html5media.min.js"></script>
-	<script async src="https://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
-	<script async src="https://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.swf"></script>
 	
 	<!-- Fallbacks for remotely hosted libraries. -->
-	<script>window.jQuery || document.write('<script src="/misc/jquery.js"><\/script>')</script>
-	<script>window.$.throttle || document.write('<script src="/misc/throttle-debounce.js"><\/script>')</script>
 	<script>window.Modernizr || document.write('<script src="/misc/modernizr.js"><\/script>')</script>
 	<script>window.StyleFix || document.write('<script src="/misc/prefixfree.js"><\/script>')</script>
-	<script>window.google || document.write('<script src="/misc/google-api.js"><\/script>')</script>
 </head>
 
 <body>

@@ -73,6 +73,8 @@ input[name="header"] + label{
 	display: none;
 	font-size: 80%;
 	height: calc(20vh - .8px);
+	max-width: 99px;
+	overflow: hidden;
 	text-align: center;
 	transition: .25s background, .25s box-shadow;
 	vertical-align: middle;

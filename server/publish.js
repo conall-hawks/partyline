@@ -1,6 +1,6 @@
 Meteor.publish('chat', function(room){
 	if(typeof room !== 'string') return;
-	return Chat.find({room: room}, {sort: {timestamp: -1}, limit: 16});
+	return Chat.find({room: room}, {sort: {timestamp: -1}, limit: 8});
 });
 
 Meteor.publish('users', function(){
