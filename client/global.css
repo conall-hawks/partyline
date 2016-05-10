@@ -8,6 +8,7 @@ html{
 	color: #BBB;
 	overflow: hidden;
 	/*user-select: none;*/
+	height: 100vh;
 }
 body{
 	color: #BBB;
@@ -123,10 +124,12 @@ input[name="header"]:checked + label + .content{
 	z-index: 1;
 }
 
+/*
 .content article {
 	overflow-x: hidden;
 	overflow-y: auto;
 }
+*/
 
 .right-icon + label {
 	border-bottom: 1px solid rgba(255, 255, 255, .0625);

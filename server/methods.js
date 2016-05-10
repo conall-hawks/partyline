@@ -52,5 +52,15 @@ Meteor.methods({
 		if(Accounts.users.find({profile: {name: name}}).count()) throw new Meteor.Error('Name already taken.');
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {profile: {name: name}}});
 		return true;
+	},
+	setTopic: function(name, topic){
+		if(!name) throw new Meteor.Error('Name cannot be empty.');
+		if(!topic) throw new Meteor.Error('Topic cannot be empty.');
+		room = {
+			name: name,
+			topic: topic
+		};
+		if(Rooms.find({name: name}).count() > 0) Rooms.remove({name: name});
+		Rooms.insert(room);
 	}
 });

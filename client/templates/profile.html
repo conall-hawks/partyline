@@ -1,9 +1,9 @@
 <template name="profile">
 	<section class="profile content">
 		<h2>{{> loginButtons}}'s Profile</h2>
-		<input class="username-input" type="text" placeholder="Username" /><input class="username-submit" type="button" value="Change Username" />
-		<input class="new-password-input" type="text" placeholder="Password" /><input class="new-password-submit" type="button" value="Change Password" />
-		<label for="color-input">Color:</label><input id="color-input" type="color" onchange="document.documentElement.style.backgroundColor = this.value" value="#0c0c10" />
+		<input class="username-input" type="text" placeholder="Username" /><input class="username-submit" type="button" value="Change" />
+		<input class="new-password-input" type="text" placeholder="Password" /><input class="new-password-submit" type="button" value="Change" />
+		<label for="color-input">UI Color:</label><input id="color-input" type="color" onchange="document.documentElement.style.backgroundColor = this.value" value="#0c0c10" />
 		<input id="color-reset" type="reset" onclick="document.getElementById('color-input').value = '#0c0c10'; document.documentElement.style.backgroundColor = null" />
 		<img class="profile-icon" src="{{profile.icon}}" alt="Profile picture." title="Click to change." />
 	</section>

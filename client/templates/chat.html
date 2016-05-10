@@ -3,10 +3,10 @@
 		<input id="usernav-icon" class="right-icon" type="checkbox" /><label for="usernav-icon"></label>
 		<article class="messages">
 			<h2><span>Topic: {{topic}}</span> <span>Room: {{room}} ({{numUsers}})</span></h2>
-			<p>
-				{{> upload_bootstrap}}
-			</p>
-			<input class="message-input" type="text" placeholder="Message" /><input class="message-submit" type="button" value="Send" />
+			<p></p>
+			<input class="message-input" type="text" placeholder="Message" style="color: {{color}}" />
+			{{> upload_bootstrap callback="uploaded"}}
+			<input class="message-submit" type="button" value="Send" />
 		</article>
 		<aside class="usernav">
 			<h2>Users: </h2>

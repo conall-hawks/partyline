@@ -7,11 +7,18 @@ Template.browse.helpers({
 		}).unique();
 		if(typeof result === 'object' && typeof result[0] !== 'string') result.shift();
 		return result;
+	},
+	'isSelected': function(room){
+		if(Session.get('room') == room) return 'selected';
+	},
+	'userCount': function(room){
+		result = Accounts.users.find({room: room}).count();
+		if(typeof result === 'number' && result > 0) return ' (' + result + ')';
 	}
 });
 
 Template.browse.events({
-	'click .room': function(event){
+	'click .room a': function(event){
 		Session.set('room', event.target.textContent);
 	}
 });
