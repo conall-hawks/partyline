@@ -1,4 +1,4 @@
 # partyline
-By: Jon Hawks
-Awesome chat app written in Meteor.
-Currently hosted at: http://jonhawks.net
+By: Jon Hawks<br />
+Awesome chat app written in Meteor.<br />
+Currently hosted at: http://jonhawks.net<br />
