@@ -30,7 +30,6 @@
 	
 	<!-- Remotely hosted libraries. -->
 	<script async src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.33.3/es6-shim.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.15/jquery.touchSwipe.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 	<!--[if (gte IE 6)&(lte IE 8)]><script async src="https://cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.2/selectivizr-min.js"></script><![endif]-->
@@ -43,7 +42,7 @@
 </head>
 
 <body>
-	<input id="menu-icon" type="checkbox" /><label for="menu-icon"></label>
+	<input id="menu-icon" type="checkbox" /><label for="menu-icon" title="Open the navigation menu."></label>
 	<section class="main">
 		<input id="chat" name="header" type="radio" checked /><label for="chat"><i class="fa fa-comment"></i>Chat<span class="chat-unread">{{chatUnread}}</span></label>{{> chat}}
 		<input id="browse" name="header" type="radio" /><label for="browse"><i class="fa fa-group"></i>Browse Rooms</label>{{> browse}}

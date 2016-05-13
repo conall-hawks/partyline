@@ -5,6 +5,8 @@
 		<input class="new-password-input" type="text" placeholder="Password" /><input class="new-password-submit" type="button" value="Change" />
 		<label for="color-input">UI Color:</label><input id="color-input" type="color" onchange="document.documentElement.style.backgroundColor = this.value" value="#0c0c10" />
 		<input id="color-reset" type="reset" onclick="document.getElementById('color-input').value = '#0c0c10'; document.documentElement.style.backgroundColor = null" />
-		<img class="profile-icon" src="{{profile.icon}}" alt="Profile picture." title="Click to change." />
+		<h2 class="profile-icon-h2">Profile Picture: (click to change)</h2>
+		<img class="profile-icon" src="{{icon}}" alt="Profile picture." title="Click to change." />
+		{{> upload_bootstrap type="image"}}
 	</section>
 </template>

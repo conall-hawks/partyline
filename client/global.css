@@ -31,6 +31,9 @@ input[type="text"] + input[type="button"], input[type="reset"]{
 	background: rgba(255, 255, 255, .125);
 	width: 70px;
 }
+::-webkit-input-placeholder{
+	color: grey;
+}
 input[type="button"]:focus, input[type="button"]:hover, input[type="reset"]:focus, input[type="reset"]:hover {
 	background: rgba(255, 255, 255, .25) !important;
 }
@@ -44,10 +47,10 @@ input[type="button"]:focus, input[type="button"]:hover, input[type="reset"]:focu
 	border-bottom: 1px solid rgba(255, 255, 255, .0625);
 	cursor: pointer;
 	position: absolute;
-	height: 31px;
+	height: 39px;
 	left: 0;
 	top: 0;
-	width: 31px;
+	width: 39px;
 	z-index: 2;
 }
 #menu-icon + label {
@@ -113,7 +116,7 @@ input[name="header"]:checked + label{
 	width: 100vw;
 }
 .content > h2:first-of-type, .messages > h2:first-of-type{
-	margin: 0 0 0 32px;
+	margin: 0 0 0 40px;
 }
 #menu-icon:checked + label + .main .content{
 	left: 100px;
@@ -161,6 +164,7 @@ h2{
 	text-shadow: 0 0 1px;
 	white-space: nowrap;
 }
+@media(max-width: 640px){h2:first-of-type{font-size: 100%;}}
 @media(max-width: 480px){h2:first-of-type{font-size: 75%;}}
 
 .system, .admin, .username, .guest {

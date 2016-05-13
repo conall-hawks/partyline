@@ -1,16 +1,16 @@
 <template name="chat">
 	<section class="chat content">
-		<input id="usernav-icon" class="right-icon" type="checkbox" /><label for="usernav-icon"></label>
-		<article class="messages">
-			<h2><span>Topic: {{topic}}</span> <span>Room: {{room}} ({{numUsers}})</span></h2>
+		<input id="usernav-icon" class="right-icon" type="checkbox" /><label for="usernav-icon" title="Show a list of users in this chat room."></label>
+		<article class="messages">	
+			<h2><span title="The topic of this chat room.">Topic: {{topic}}</span> <span title="The name of this chat room.">Room: {{room}} ({{numUsers}})</span></h2>
 			<p></p>
-			<input class="message-input" type="text" placeholder="Message" style="color: {{color}}" />
+			<input class="message-input" type="text" placeholder="/help" style="color: {{color}}" title="Type your message here." />
 			{{> upload_bootstrap callback="uploaded"}}
-			<input class="message-submit" type="button" value="Send" />
+			<input class="message-submit" type="button" value="Send" title="Submit your message." />
 		</article>
 		<aside class="usernav">
 			<h2>Users: </h2>
-			<ul>{{#each users}}<li><span class="username">{{username _id}}</span></li>{{/each}}</ul>
+			<ul>{{#each users}}<li><span class="username" title="Send this user a private message.">{{username _id}}</span></li>{{/each}}</ul>
 		</aside>
 	</section>
 </template>

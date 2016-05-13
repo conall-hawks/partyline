@@ -1,3 +1,9 @@
+Template.profile.helpers({
+	icon: function(){
+		return getUserIcon(Meteor.userId());
+	}
+});
+
 Template.profile.events({
 	'keyup .username-input': function(event){
 		if(event.keyCode == 13){

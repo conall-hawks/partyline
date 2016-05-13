@@ -58,11 +58,11 @@ Array.prototype.unique = function(){
 	return b;
 }
 
-usrMsg = function(user, icon = '/image/anon.png', timestamp = null, content, isAdmin = false){
+usrMsg = function(user, icon = null, timestamp = null, content, isAdmin = false){
+	if(icon === null) icon = getUserIcon(getUserId(user));
 	// Must be run twice (need to find out why)
 	content = escapeHtml(content);
 	for(var i = 0; i < 2; i++){
-		console.log('test');
 		content = unescapeSpan(content);
 		content = unescapeLink(content);
 		content = unescapeVideo(content);
@@ -81,7 +81,6 @@ setLocation = function(){
 			window.geolocation = [], window.geolocation['latitude'] = position.coords.latitude, window.geolocation['longitude'] = position.coords.longitude;
 			for(var i = 0; i < data.results[0].address_components.length; i++){
 				window.geolocation[data.results[0].address_components[i].types[0]] = data.results[0].address_components[i].long_name;
-				console.log("window.geolocation['" + data.results[0].address_components[i].types[0] + "'] = '" + data.results[0].address_components[i].long_name + "';");
 			}
 			if(typeof window.geolocation === 'object'){
 				var result = '';
@@ -132,6 +131,18 @@ helpMessage = function(startup = false){
 	usrMsg('System', '/image/system.png', null, message, true);
 }
 
+privateMessage = function(recipient){
+	if(Messages.find({$or: [{$and: [{sender: getUserId(recipient)}, {recipient: Meteor.userId()}]}, {$and: [{sender: Meteor.userId()}, {recipient: getUserId(recipient)}]}]}).count()) Session.set('private', getUserId(recipient));
+	$('#messages').click();
+	if(!$('#compose-icon').is(':checked')) $('#compose-icon').click();
+	$('.compose-private-message-input')[0].value = recipient.replace(/[: ]+$/, '');
+	setSelectionRange($(".compose-private-message-textarea")[0]);
+}
+
+$(window).resize(function(){
+	$('.messages p').each(function(){$(this).scrollTop($(this).prop('scrollHeight'))});
+});
+
 Meteor.startup(() => {
 	helpMessage(true);
 	Session.set('room', 'global');
@@ -141,26 +152,38 @@ Meteor.startup(() => {
 	Meteor.subscribe('messages', Meteor.userId());
 	
 	Uploader.finished = function(index, fileInfo, templateContext){
-		setTimeout(function(){$('.progress-bar').css('width', '0%')}, 100);
-		console.log(fileInfo);
-		console.log(templateContext);
-		if(fileInfo.type.indexOf('image') > -1){
-			var message = '<a class="image" href="' + fileInfo.url + '" style="background-image: url(\'' + fileInfo.url + '\');" target="_blank"></a>';
-		}else if(fileInfo.type.indexOf('video') > -1){
-			var message = '<video src="' + fileInfo.url + '" controls></video>';
+		// 127.0.0.1:3000 = linux server
+		fileInfo.url = fileInfo.url.replace('127.0.0.1:3000', 'jonhawks.net');
+		if(templateContext.firstNode.parentNode.className.indexOf('messages') > -1){
+			// -------------------------------------
+			// Chat room file uploading
+			setTimeout(function(){$('.progress-bar').css('width', '0%')}, 100);
+			if(fileInfo.type.indexOf('image') > -1){
+				var message = '<a class="image" href="' + fileInfo.url + '" style="background-image: url(\'' + fileInfo.url + '\');" target="_blank"></a>';
+			}else if(fileInfo.type.indexOf('video') > -1){
+				var message = '<video src="' + fileInfo.url + '" controls></video>';
+			}else{
+				var message = 'Uploaded <a href="' + fileInfo.url + '" target="_blank" title="[Type: ' + fileInfo.type + ']">' + fileInfo.name + '</a>.';
+			}
+			Meteor.call('chatMessage', Session.get('room'), message);
 		}else{
-			UploadServer.delete(fileInfo['path']);
+			// -------------------------------------
+			// Profile picture uploading
+			//setTimeout(function(){$('.progress-bar').css('width', '0%')}, 100);
+			if(fileInfo.type.indexOf('image') > -1){
+				Meteor.call('setIcon', fileInfo.url);
+				Session.set('icon', fileInfo.url);
+			}
 		}
-		Meteor.call('chatMessage', Session.get('room'), message);
 	}
 	
 	setTimeout(function(){
 		if(typeof Session.get('room') !== 'string') Session.set('room', 'global');
 	}, 100);
 	
-	Meteor.isCordova(function(){
+	/*Meteor.isCordova(function(){
 		$('input[name=header]').click(function(){$('#menu-icon').click()});
-	});
+	});*/
 });
 
 Tracker.autorun(function(){
@@ -207,7 +230,9 @@ Messages.find().observe({
 
 Rooms.find().observe({
 	added: function(doc){
-		console.log(doc);
+		if(doc.name == Session.get('room'))	usrMsg('System', '/image/system.png', null, 'Topic is: ' + doc.topic, true);
+	}, 
+	changed: function(doc){
 		if(doc.name == Session.get('room'))	usrMsg('System', '/image/system.png', null, 'Topic changed to: ' + doc.topic, true);
 	}
 })
@@ -226,9 +251,9 @@ Template.registerHelper('clock', function(timestamp){
 
 Template.body.onRendered(function(){
 	startSwipe = setInterval(function(){
-		if(typeof $().swipe === 'function'){
+		if(typeof jQuery === 'function' && typeof $().swipe === 'function'){
 			$('body').swipe({
-				swipeStatus:function(event, phase, direction, distance){
+				swipeStatus: function(event, phase, direction, distance){
 					menu = $('input[name="header"] + label');
 					icon = $('#menu-icon + label');
 					content = $('.content');
@@ -257,16 +282,7 @@ Template.body.onRendered(function(){
 								});
 							}
 						}else if(direction == 'right'){
-							if(!$('#menu-icon').is(':checked')){
-								menu.css('display', 'table-cell');
-								menu.css('position', 'relative');
-								content.css('position', 'absolute');
-								
-								menu.css('left', '-' + (100 - distance) + 'px');
-								icon.css('left', distance + 'px');
-								content.css('left', distance + 'px');
-								content.css('width', 'calc(100vw - ' + distance + 'px)');
-							}else{
+							if($('.right-icon').is(':checked')){
 								$('.right-icon').each(function(){
 									aside = $(this).parent().find('aside');
 									if($(this).is(':checked')){
@@ -277,6 +293,17 @@ Template.body.onRendered(function(){
 										$(this).parent().find('.messages').css('width', 'calc(100% - ' + (200 - distance) + 'px)');
 									}
 								});
+							}else if(!$('#menu-icon').is(':checked')){
+								menu.css('display', 'table-cell');
+								menu.css('position', 'relative');
+								content.css('position', 'absolute');
+								
+								menu.css('left', '-' + (100 - distance) + 'px');
+								icon.css('left', distance + 'px');
+								content.css('left', distance + 'px');
+								content.css('width', 'calc(100vw - ' + distance + 'px)');
+							}else{
+								
 							}
 						}
 					}
@@ -289,10 +316,12 @@ Template.body.onRendered(function(){
 							}
 						}
 						if(direction == 'right'){
-							if(!$('#menu-icon').is(':checked')){
+							if($('.right-icon').is(':checked')){
+								$('.right-icon').each(function(){if($(this).is(':checked')) $(this).click()});
+							}else if(!$('#menu-icon').is(':checked')){
 								$('#menu-icon').click();
 							}else{
-								$('.right-icon').each(function(){if($(this).is(':checked')) $(this).click()});
+								
 							}
 						}
 						menu.removeAttr('style');
@@ -356,15 +385,3 @@ Template.body.events({
 		Session.set('privateUnread', 0);
 	}
 });
-
-$(window).resize(function(){
-	$('.messages p').each(function(){$(this).scrollTop($(this).prop('scrollHeight'))});
-});
-
-privateMessage = function(recipient){
-	if(Messages.find({$or: [{$and: [{sender: getUserId(recipient)}, {recipient: Meteor.userId()}]}, {$and: [{sender: Meteor.userId()}, {recipient: getUserId(recipient)}]}]}).count()) Session.set('private', getUserId(recipient));
-	$('#messages').click();
-	if(!$('#compose-icon').is(':checked')) $('#compose-icon').click();
-	$('.compose-private-message-input')[0].value = recipient.replace(new RegExp("[: ]+$"), '');
-	setSelectionRange($(".compose-private-message-textarea")[0]);
-}

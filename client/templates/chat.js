@@ -12,11 +12,12 @@ Template.chat.onCreated(function(){
 			if(Math.abs(window.orientation) === 90) {
 				// Landscape
 			}else{
+				// Portrait
 				$('.content article p').css('height', 'calc(100vh - 116px)');
 			}
 		}
 	}else{
-		console.log(navigator.userAgent);
+		//console.log(navigator.userAgent);
 	}
 });
 
@@ -58,7 +59,6 @@ Template.chat.events({
 			}else if(event.target.value.indexOf('/join') === 0){
 				Session.set('room', event.target.value.replace('/join ', ''));
 			}else if(event.target.value.indexOf('/topic') === 0){
-				console.log(event.target.value.replace('/topic ', ''));
 				Meteor.call('setTopic', Session.get('room'), event.target.value.replace('/topic ', ''));
 			}else if(event.target.value.indexOf('/color') === 0){
 				event.target.value = event.target.value.replace('/color ', '').replace('/color', '');

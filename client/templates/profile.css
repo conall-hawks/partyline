@@ -24,26 +24,46 @@ label[for="color-input"]:focus, label[for="color-input"]:hover{
 	float: left;
 	width: calc(50% - 178px);
 }
-@media(max-width: 480px){#color-input{width: calc(100% - 180px)}}
+@media(max-width: 480px){#color-input{width: calc(100% - 188px)}}
 
 #color-reset{
 	width: 70px;
 }
 
+.profile-icon-h2{
+	background: rgba(255, 255, 255, .125);
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	color: #BBB;
+	font-size: 16px;
+	height: 28px;
+	line-height: 28px;
+	overflow: hidden;
+	padding: 0;
+	top: 106px;
+	text-shadow: none;
+}
+@media(max-width: 480px){  }
+
+.profile-icon-h2, .profile-icon{
+	left: calc(50% + 11px);
+	position: absolute;
+	width: calc(50% - 20px);
+}
 .profile-icon{
-	background: rgba(0, 0, 0, .25);
+	background-color: rgba(0, 0, 0, .25);
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	top: 135px;
+	height: calc(50vh - 36px);
+}
+.profile form{
 	border: 1px solid rgba(255, 255, 255, .0625);
 	border-radius: 2px;
 	box-shadow: 0 0 2px black;
 	display: block;
-	float: right;
-	height: calc(33vw - 8px);
-	line-height: -khtml-block-height;
-	line-height: -ms-block-height;
-	line-height: -moz-block-height;
-	line-height: -o-block-height;
-	line-height: -webkit-block-height;
-	line-height: block-height;
+	float: left;
+	height: calc(50vh - 8px);
 	margin: 8px 8px 0 8px;
 	max-height: 480px;
 	max-width: 720px;
@@ -51,7 +71,50 @@ label[for="color-input"]:focus, label[for="color-input"]:hover{
 	text-align: center;
 	width: calc(50% - 20px);
 }
-@media(max-width: 480px){.profile-icon{
-	height: calc(50vw - 16px);
-	width: calc(100% - 16px);
-}}
+@media(max-width: 480px){
+	.profile-icon-h2{
+		top: 141px;
+	}
+	.profile-icon-h2, .profile-icon, .profile form{
+		left: 8px;
+		width: calc(100% - 16px);
+	}
+	.profile-icon{
+		top: 170px;
+	}
+}
+
+.profile form *{
+	border-radius: 2px !important;
+	cursor: pointer !important;
+}
+
+.profile .uploadPanel, .profile .btn-file, .profile .jqUploadclass{
+	font-size: 0;
+	height: calc(50vh - 8px);
+	max-height: 480px;
+	min-width: unset !important;
+	margin: 0 !important;
+	position: unset !important;
+	width: 100%;
+}
+
+.profile .jqUploadclass{
+	cursor: pointer;
+	margin: 0;
+	padding: 0;
+	z-index: 1;
+}
+
+/* login stuffs */
+#login-dropdown-list{
+	background: #333;
+	color: #BBB;
+	display: block;
+}
+#login-email, #forgot-password-email{
+	max-width: 80%;
+}
+#login-password{
+	max-width: 70%;
+}

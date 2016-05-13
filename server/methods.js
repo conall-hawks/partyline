@@ -2,32 +2,20 @@ Meteor.methods({
 	setRoom: function(room){
 		if(typeof room === 'string'){
 			Meteor.users.update({_id: Meteor.userId()}, {$set: {room: room}});
-			return false;
+			return true;
 		}else{
 			Meteor.users.update({_id: Meteor.userId()}, {$unset: {room}});
-			return true;
+			return false;
 		}
 	},
 	chatMessage: function(room, content){
 		if(!room) throw new Meteor.Error('Room cannot be empty.');
 		if(!content) throw new Meteor.Error('Message cannot be empty.');
 		
-		if(!Accounts.users.findOne({_id: Meteor.userId()}).profile.name){
-			user = 'Guest-' + Meteor.userId().substr(0, 4);
-		}else{
-			user = Accounts.users.findOne({_id: Meteor.userId()}).profile.name;
-		}
-		
-		if(!Accounts.users.findOne({_id: Meteor.userId()}).profile.icon){
-			icon = 'image/anon.png';
-		}else{
-			icon = Accounts.users.findOne({_id: Meteor.userId()}).profile.icon;
-		}
-		
 		message = {
 			room: room,
-			user: user,
-			icon: icon,
+			user: getUserName(Meteor.userId()),
+			icon: getUserIcon(Meteor.userId()),
 			timestamp: new Date(),
 			content: content
 		};
@@ -37,7 +25,6 @@ Meteor.methods({
 		if(!recipient) throw new Meteor.Error('Recipient cannot be empty.');
 		if(!content) throw new Meteor.Error('Message cannot be empty.');
 		recipient = getUserId(recipient);
-		if(!recipient) throw new Meteor.Error('User does not exist.');
 		
 		message = {
 			sender: Meteor.userId(),
@@ -50,17 +37,18 @@ Meteor.methods({
 	setUsername: function(name){
 		if(!name) throw new Meteor.Error('Name cannot be empty.');
 		if(Accounts.users.find({profile: {name: name}}).count()) throw new Meteor.Error('Name already taken.');
-		Meteor.users.update({_id: Meteor.userId()}, {$set: {profile: {name: name}}});
+		Meteor.users.update({_id: Meteor.userId()}, {$set: {'profile.name': name}});
+		return true;
+	},
+	setIcon: function(icon){
+		if(!icon) throw new Meteor.Error('Icon cannot be empty.');
+		Meteor.users.update({_id: Meteor.userId()}, {$set: {'profile.icon': icon}});
 		return true;
 	},
 	setTopic: function(name, topic){
-		if(!name) throw new Meteor.Error('Name cannot be empty.');
+		if(!name) throw new Meteor.Error('Room cannot be empty.');
 		if(!topic) throw new Meteor.Error('Topic cannot be empty.');
-		room = {
-			name: name,
-			topic: topic
-		};
-		if(Rooms.find({name: name}).count() > 0) Rooms.remove({name: name});
-		Rooms.insert(room);
+		Rooms.upsert({name: name}, {$set: {topic: topic}});
+		return true;
 	}
 });

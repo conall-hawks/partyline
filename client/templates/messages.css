@@ -1,5 +1,7 @@
 label[for="compose-icon"] .fa-plus {
-	font-size: 35px;
+	font-size: 48px;
+	font-size: -moz-block-height;
+	font-size: -webkit-xxx-large;
 	color: rgba(255, 255, 255, 0.5);
 	text-align: center;
 	width: 100%;
