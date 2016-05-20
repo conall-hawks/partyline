@@ -1,10 +1,10 @@
 Meteor.methods({
-	setRoom: function(room){
+	setRoom: function(room, user = null){
 		if(typeof room === 'string'){
-			Meteor.users.update({_id: Meteor.userId()}, {$set: {room: room}});
+			Meteor.users.update({_id: typeof user === 'string' ? user : Meteor.userId()}, {$set: {room: room}});
 			return true;
 		}else{
-			Meteor.users.update({_id: Meteor.userId()}, {$unset: {room}});
+			Meteor.users.update({_id: typeof user === 'string' ? user : Meteor.userId()}, {$unset: {room}});
 			return false;
 		}
 	},
@@ -22,9 +22,9 @@ Meteor.methods({
 		Chat.insert(message);
 	},
 	privateMessage: function(recipient, content){
-		if(!recipient) throw new Meteor.Error('Recipient cannot be empty.');
-		if(!content) throw new Meteor.Error('Message cannot be empty.');
 		recipient = getUserId(recipient);
+		if(!recipient) throw new Meteor.Error('Recipient empty or does not exist.');
+		if(!content) throw new Meteor.Error('Message cannot be empty.');
 		
 		message = {
 			sender: Meteor.userId(),

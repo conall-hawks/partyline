@@ -1,5 +1,5 @@
-window.onbeforeunload = function(){
-	Meteor.call('setRoom');
+rand = function(min = 0, max = 1){
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 escapeHtml = function(text){
@@ -126,7 +126,7 @@ setSelectionRange = function(input, selectionStart = 0, selectionEnd = 0){
 }
 
 helpMessage = function(startup = false){
-	var message = 'Commands: /browse, /join <room>, /topic <text>, /color <cssColor>, /whisper <user>, /help';
+	var message = 'Commands: /browse, /join <room>, /topic <text>, /color <cssColor>, /whisper <user>, /meme <search>, /help';
 	if(startup) message = 'Welcome to Partyline! ' + message;
 	usrMsg('System', '/image/system.png', null, message, true);
 }
@@ -143,6 +143,21 @@ $(window).resize(function(){
 	$('.messages p').each(function(){$(this).scrollTop($(this).prop('scrollHeight'))});
 });
 
+unloadHandle = function(event){
+	Meteor.call('setRoom');
+	return null;
+}
+if('onpagehide' in window) window.addEventListener('pagehide', unloadHandle, false);
+if('onunload' in window) window.addEventListener('unload', unloadHandle, false);
+if('onbeforeunload' in window) window.addEventListener('beforeunload', unloadHandle, false);
+
+loadHandle = function(event){
+	Meteor.call('setRoom', 'global');
+	return null;
+}
+if('onpageshow' in window) window.addEventListener('pageshow', loadHandle, false);
+if('onload' in window) window.addEventListener('load', loadHandle, false);
+
 Meteor.startup(() => {
 	helpMessage(true);
 	Session.set('room', 'global');
@@ -150,8 +165,16 @@ Meteor.startup(() => {
 	Meteor.subscribe('users');
 	Meteor.subscribe('rooms');
 	Meteor.subscribe('messages', Meteor.userId());
+	startGuest = setInterval(function(){
+		if(typeof Accounts.user() === 'object'){
+			clearInterval(startGuest);
+			if(Accounts.user().profile.guest) window.guest = Accounts.user()._id;
+		}
+	}, 500);
 	
 	Uploader.finished = function(index, fileInfo, templateContext){
+		// Package spits out an incorrect url if the file shares a duplicate file name. So we must rebuild this string.
+		fileInfo.url = fileInfo.baseUrl + fileInfo.name;
 		// 127.0.0.1:3000 = linux server
 		fileInfo.url = fileInfo.url.replace('127.0.0.1:3000', 'jonhawks.net');
 		if(templateContext.firstNode.parentNode.className.indexOf('messages') > -1){
@@ -159,9 +182,9 @@ Meteor.startup(() => {
 			// Chat room file uploading
 			setTimeout(function(){$('.progress-bar').css('width', '0%')}, 100);
 			if(fileInfo.type.indexOf('image') > -1){
-				var message = '<a class="image" href="' + fileInfo.url + '" style="background-image: url(\'' + fileInfo.url + '\');" target="_blank"></a>';
+				var message = '<a class="image" href="' + fileInfo.url + '" style="background-image: url(\'' + fileInfo.url + '\');" target="_blank" title="[Type: ' + fileInfo.type + ']"></a>';
 			}else if(fileInfo.type.indexOf('video') > -1){
-				var message = '<video src="' + fileInfo.url + '" controls></video>';
+				var message = '<video src="' + fileInfo.url + '" controls title="[Type: ' + fileInfo.type + ']"></video>';
 			}else{
 				var message = 'Uploaded <a href="' + fileInfo.url + '" target="_blank" title="[Type: ' + fileInfo.type + ']">' + fileInfo.name + '</a>.';
 			}
@@ -169,7 +192,6 @@ Meteor.startup(() => {
 		}else{
 			// -------------------------------------
 			// Profile picture uploading
-			//setTimeout(function(){$('.progress-bar').css('width', '0%')}, 100);
 			if(fileInfo.type.indexOf('image') > -1){
 				Meteor.call('setIcon', fileInfo.url);
 				Session.set('icon', fileInfo.url);
@@ -185,6 +207,9 @@ Meteor.startup(() => {
 		$('input[name=header]').click(function(){$('#menu-icon').click()});
 	});*/
 });
+
+// Remove previously used guest account from chat room.
+Accounts.onLogin(function(){ if(typeof window.guest === 'string') Meteor.call('setRoom', null, window.guest) });
 
 Tracker.autorun(function(){
 	Meteor.call('setRoom', Session.get('room'));

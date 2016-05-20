@@ -3,7 +3,9 @@ Meteor.startup(() => {
 	AccountsGuest.anonymous = true;
 	Accounts.removeOldGuests(new Date);
 	
-	if(typeof process.env.PWD !== 'string') process.env.PWD = 'E:/arkivez/warez/GitPortable/a100-dev/partyline/';
+	// If you're currently operating on Windows, this is (hopefully) the path to the project root.
+	if(typeof process.env.PWD !== 'string') process.env.PWD = process.cwd() + '\\..\\..\\..\\..\\..\\';
+	
 	UploadServer.init({
 		tmpDir: process.env.PWD + '/.uploads/tmp',
 		uploadDir: process.env.PWD + '/.uploads/',
